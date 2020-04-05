@@ -6,10 +6,11 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button botaoTocar;
+    private Button botaoTocar, botaoVoltar, botaoAvancar;
     private MediaPlayer mediaPlayer;
 
     @Override
@@ -17,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        botaoVoltar = findViewById(R.id.botaoVoltarId);
+        botaoAvancar = findViewById(R.id.botaoAvancarId);
         botaoTocar = findViewById(R.id.botaoTocarId);
         mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.razor);
 
@@ -32,13 +35,28 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(mediaPlayer != null){
+            mediaPlayer.release();
+            Toast.makeText(this, "Obrigado por ouvir Razor!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private void tocarMusica(){
 
         if(mediaPlayer != null){
             mediaPlayer.start();
             botaoTocar.setText("Pausar");
         }
+    }
 
+    private void pararMusica(){
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            botaoTocar.setText("Tocar");
+        }
     }
 
     private void pausarMusica(){
@@ -46,5 +64,11 @@ public class MainActivity extends AppCompatActivity {
             mediaPlayer.pause();
             botaoTocar.setText("Tocar");
         }
+    }
+
+    private void voltarMusica(){
+    }
+
+    private void avançarMusica(){
     }
 }
