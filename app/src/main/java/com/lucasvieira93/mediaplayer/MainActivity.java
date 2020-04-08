@@ -38,9 +38,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(mediaPlayer != null){
-            mediaPlayer.release();
+        if(mediaPlayer != null && mediaPlayer.isPlaying()){
             Toast.makeText(this, "Obrigado por ouvir Razor!", Toast.LENGTH_SHORT).show();
+            mediaPlayer.release();
+            mediaPlayer.stop();
+            mediaPlayer = null;
         }
     }
 
